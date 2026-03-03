@@ -48,7 +48,7 @@ const Home = () => {
     <div className="relative overflow-hidden h-screen">
       {/* Fixed Navbar */}
       <div className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center gap-4">
               <img src="https://thumbs.dreamstime.com/b/cute-wallet-cartoon-money-coins-yellow-background-adorable-smiling-face-full-paper-currency-all-great-383920644.jpg" alt="Wallet Icon" className="w-12 h-12 rounded-full" />

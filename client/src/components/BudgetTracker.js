@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
 
 const BudgetTracker = () => {
   const [budgets, setBudgets] = useState([]);
@@ -13,10 +15,18 @@ const BudgetTracker = () => {
   const [editingBudget, setEditingBudget] = useState(null);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    // Check if user is logged in
+    if (!user) {
+      navigate('/login');
+      return;
+    }
     fetchData();
-  }, []);
+  }, [user, navigate]);
 
   const fetchData = async () => {
     try {
@@ -50,7 +60,7 @@ const BudgetTracker = () => {
     setError('');
     setSuccess('');
     try {
-      await axios.post('https://expense-tracker-server-jtuc.onrender.com/api/budgets', formData);
+      await axios.post('http://localhost:5000/api/budgets', formData);
       setSuccess(`Budget for ${formData.category} category added successfully!`);
       setFormData({ category: '', amount: '' });
       setShowForm(false);

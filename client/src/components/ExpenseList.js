@@ -23,7 +23,7 @@ const ExpenseList = () => {
 
   const fetchExpenses = async () => {
     try {
-      const res = await axios.get('https://expense-tracker-server-jtuc.onrender.com/api/expenses');
+      const res = await axios.get('http://localhost:5001/api/expenses');
       setExpenses(res.data);
     } catch (err) {
       setError('Failed to fetch expenses');
