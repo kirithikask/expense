@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import api from '../api';
 
 const AddExpense = () => {
   const [formData, setFormData] = useState({
@@ -27,7 +28,7 @@ const AddExpense = () => {
     setError('');
 
     try {
-      await axios.post('http://localhost:5000/api/expenses', formData);
+      await api.post('/api/expenses', formData);
       navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to add expense');

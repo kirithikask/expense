@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import api from '../api';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Navigation } from 'swiper';
 import 'swiper/css';
@@ -23,7 +24,7 @@ const ExpenseList = () => {
 
   const fetchExpenses = async () => {
     try {
-      const res = await axios.get('http://localhost:5001/api/expenses');
+      const res = await api.get('/api/expenses');
       setExpenses(res.data);
     } catch (err) {
       setError('Failed to fetch expenses');
@@ -35,7 +36,7 @@ const ExpenseList = () => {
   const deleteExpense = async (id) => {
     if (window.confirm('Are you sure you want to delete this expense?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/expenses/${id}`);
+        await api.delete(`/api/expenses/${id}`);
         setExpenses(expenses.filter(expense => expense._id !== id));
       } catch (err) {
         setError('Failed to delete expense');
@@ -55,7 +56,7 @@ const ExpenseList = () => {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5000/api/expenses/${editingExpense._id}`, editFormData);
+      await api.put(`/api/expenses/${editingExpense._id}`, editFormData);
       setExpenses(expenses.map(exp => exp._id === editingExpense._id ? { ...exp, ...editFormData } : exp));
       setEditingExpense(null);
     } catch (err) {

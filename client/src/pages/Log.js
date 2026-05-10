@@ -1,22 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
+import api from '../api';
 
 const Log = () => {
   const [logs, setLogs] = useState([]);
 
   useEffect(() => {
-    // Fetch logs from API
     const fetchLogs = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/logs', {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          }
-        });
-        if (response.ok) {
-          const data = await response.json();
-          setLogs(data);
-        }
+        const res = await api.get('/api/logs');
+        setLogs(res.data);
       } catch (error) {
         console.error('Error fetching logs:', error);
       }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import api from '../api';
 import { useAuth } from '../context/AuthContext';
 
 const BudgetTracker = () => {
@@ -31,8 +32,8 @@ const BudgetTracker = () => {
   const fetchData = async () => {
     try {
       const [budgetsRes, expensesRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/budgets'),
-        axios.get('http://localhost:5000/api/expenses')
+        api.get('/api/budgets'),
+        api.get('/api/expenses')
       ]);
       setBudgets(budgetsRes.data);
       setExpenses(expensesRes.data);
@@ -60,7 +61,7 @@ const BudgetTracker = () => {
     setError('');
     setSuccess('');
     try {
-      await axios.post('http://localhost:5000/api/budgets', formData);
+      await api.post('/api/budgets', formData);
       setSuccess(`Budget for ${formData.category} category added successfully!`);
       setFormData({ category: '', amount: '' });
       setShowForm(false);
@@ -75,7 +76,7 @@ const BudgetTracker = () => {
   const deleteBudget = async (id) => {
     if (window.confirm('Are you sure you want to delete this budget?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/budgets/${id}`);
+        await api.delete(`/api/budgets/${id}`);
         setBudgets(budgets.filter(budget => budget._id !== id));
       } catch (err) {
         setError('Failed to delete budget');
@@ -94,7 +95,7 @@ const BudgetTracker = () => {
     setError('');
     setSuccess('');
     try {
-      await axios.put(`http://localhost:5000/api/budgets/${editingBudget._id}`, formData);
+      await api.put(`/api/budgets/${editingBudget._id}`, formData);
       setSuccess(`Budget for ${formData.category} category updated successfully!`);
       setFormData({ category: '', amount: '' });
       setShowForm(false);

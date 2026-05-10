@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import { Pie, Line } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, Title } from 'chart.js';
+import api from '../api';
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, Title);
 
@@ -12,15 +13,8 @@ const Graph = () => {
     // Fetch expenses data for charts
     const fetchExpenses = async () => {
       try {
-        const response = await fetch('/api/expenses', {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          }
-        });
-        if (response.ok) {
-          const data = await response.json();
-          setExpenses(data);
-        }
+        const res = await api.get('/api/expenses');
+        setExpenses(res.data);
       } catch (error) {
         console.error('Error fetching expenses:', error);
       }
